@@ -1,10 +1,10 @@
-import React from 'react'
-import Cards from './components/Cards'
-import { useState, useEffect } from "react";
+import React, { useState } from 'react';
+import Cards from './components/Cards';
 
 function App() {
   const projects = [
     {
+      id: 1,
       projectname: "Background Changer",
       year: 2022,
       tag: ["Website", "Design"],
@@ -13,6 +13,7 @@ function App() {
       height: "18vw",
     },
     {
+      id: 2,
       projectname: "TripYatri",
       year: 2023,
       tag: ["Website", "Travel"],
@@ -21,6 +22,7 @@ function App() {
       height: "30vw",
     },
     {
+      id: 3,
       projectname: "Ochi",
       year: 2024,
       tag: ["Website", "Design"],
@@ -29,6 +31,7 @@ function App() {
       height: "22vw",
     },
     {
+      id: 4,
       projectname: "Ochi",
       year: 2024,
       tag: ["Website", "Design"],
@@ -36,13 +39,13 @@ function App() {
       previewlink: "https://sumatran.cat/google-io-countdown.5f03776a.mp4",
       height: "30vw",
     },
+  ];
 
-  ]
+  const [hoveredId, setHoveredId] = useState(null);
 
   const columnsCount = 3;
-  const columns = Array.from({ length: columnsCount }, () => []); // Create empty arrays for each column
+  const columns = Array.from({ length: columnsCount }, () => []);
 
-  // Distribute projects across columns
   projects.forEach((project, index) => {
     columns[index % columnsCount].push(project);
   });
@@ -50,15 +53,20 @@ function App() {
   return (
     <div className='min-h-screen max-w-screen p-10 bg-[#FFDDE6] flex gap-4'>
       {columns.map((column, colIndex) => (
-        <div key={colIndex} className={`flex flex-col w-1/3 gap-4`}>
-          {column.map((project, projIndex) => (
-            <Cards key={projIndex} height={project.height} data={project} />
+        <div key={colIndex} className='flex flex-col w-1/3 gap-4'>
+          {column.map((project) => (
+            <Cards
+              key={project.id}
+              data={project}
+              isHovered={hoveredId === project.id}
+              onMouseEnter={() => setHoveredId(project.id)}
+              onMouseLeave={() => setHoveredId(null)}
+            />
           ))}
         </div>
       ))}
     </div>
-
-  )
+  );
 }
 
-export default App
+export default App;
