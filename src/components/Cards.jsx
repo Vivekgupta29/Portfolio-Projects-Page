@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaArrowUp } from "react-icons/fa";
 
-function Cards({ data, isHovered, onMouseEnter, onMouseLeave }) {
+function Cards({ data, hoveredId, isHovered, onMouseEnter, onMouseLeave }) {
     return (
         <div
             className='w-full rounded-xl font-Nunito relative z-[999] text-white cursor-pointer'
@@ -18,7 +18,12 @@ function Cards({ data, isHovered, onMouseEnter, onMouseLeave }) {
                 className='absolute top-0 left-0 w-full h-full object-cover rounded-xl'
             />
             <div
-                className={`absolute top-0 left-0 w-full h-full ${isHovered ? "bg-transparent" : "bg-black opacity-50"} z-[9999] rounded-xl`}
+                className={`absolute top-0 left-0 w-full h-full   
+                    ${hoveredId === null ?
+                        "z-[0] bg-transparent" :
+                        (isHovered ? "bg-transparent" : "z-[9999] bg-black opacity-[50%]")
+
+                    }  rounded-xl`}
             />
             <div className='absolute w-full h-[40%] bg-gradient-to-t from-slate-700 to-transparent bottom-0 left-0 rounded-b-xl'>
                 <div className='absolute w-full flex items-center px-6 my-1 bottom-10 left-0'>

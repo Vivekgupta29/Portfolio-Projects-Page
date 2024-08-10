@@ -58,6 +58,7 @@ function App() {
             <Cards
               key={project.id}
               data={project}
+              hoveredId
               isHovered={hoveredId === project.id}
               onMouseEnter={() => setHoveredId(project.id)}
               onMouseLeave={() => setHoveredId(null)}
