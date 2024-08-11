@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import Cards from './components/Cards';
 
 function App() {
+
+  const [hoveredId, setHoveredId] = useState(-1);
+
+  const columnsCount = 3;
+  const columns = Array.from({ length: columnsCount }, () => []);
+
   const projects = [
     {
       id: 1,
@@ -30,25 +36,22 @@ function App() {
       previewlink: "https://sumatran.cat/google-io-countdown.5f03776a.mp4",
       height: "22vw",
     },
-    {
-      id: 4,
-      projectname: "Ochi",
-      year: 2024,
-      tag: ["Website", "Design"],
-      link: "",
-      previewlink: "https://sumatran.cat/google-io-countdown.5f03776a.mp4",
-      height: "30vw",
-    },
+
   ];
-
-  const [hoveredId, setHoveredId] = useState(null);
-
-  const columnsCount = 3;
-  const columns = Array.from({ length: columnsCount }, () => []);
 
   projects.forEach((project, index) => {
     columns[index % columnsCount].push(project);
   });
+
+  const handleMouseEnter = (projectId) => {
+    setHoveredId(projectId);
+    console.log("Hovered ID: ", projectId);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredId(-1);
+    console.log("Mouse Left, Reset Hovered ID: -1");
+  };
 
   return (
     <div className='min-h-screen max-w-screen p-10 bg-[#FFDDE6] flex gap-4'>
@@ -58,10 +61,10 @@ function App() {
             <Cards
               key={project.id}
               data={project}
-              hoveredId
+              hoveredId={hoveredId}
               isHovered={hoveredId === project.id}
-              onMouseEnter={() => setHoveredId(project.id)}
-              onMouseLeave={() => setHoveredId(null)}
+              onMouseEnterFunction={() => handleMouseEnter(project.id)}
+              onMouseLeaveFunction={handleMouseLeave}
             />
           ))}
         </div>
